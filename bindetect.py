@@ -1,7 +1,17 @@
 #bindetect.py detects strings inside a .bin file
 #bin file structure info can be found here https://github.com/Ravernstal/gof2-bin-info
+from os import PathLike
+from typing import List, Literal, Union, overload
 
-def detectStrings(binFile, binType, returnType = 'list'):
+BinType = Literal['names', 'stations', 'systems']
+FilePathType = Union[str, PathLike[str]]
+
+@overload
+def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['string']) -> str: ...
+@overload
+def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['list', 'string'] = 'list') -> List[str]: ...
+
+def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['list', 'string'] = 'list') -> Union[str, List[str]]:
     """
     detects the strings inside a bin file and places them into an array
 
@@ -9,7 +19,7 @@ def detectStrings(binFile, binType, returnType = 'list'):
     :param str binType: Type of bin file. Valid binTypes are: 'names', 'stations', 'systems'
     :param str returnType: Determines what type of object should be returned in the end. Valid returntypes are: 'list', 'string'
     """
-    names = []
+    names: List[str] = []
     
     #for "names_" .bin files
     if binType == 'names':
@@ -87,8 +97,4 @@ def detectStrings(binFile, binType, returnType = 'list'):
     if returnType == 'list':
         return names
     elif returnType == 'string':
-        namesInString = names[0]
-        for i in names[1:]:
-            namesInString = namesInString + "\n" + i
-        
-        return namesInString
+        return "\n".join(names)
