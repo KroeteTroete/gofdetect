@@ -1,7 +1,7 @@
 #langdetect extracts the strings of a lang file and dumps them into a list
 import os
 from os import PathLike
-from typing import List, Literal, Union, overload
+from typing import Union
 
 FilePathType = Union[str, PathLike[str]]
 
