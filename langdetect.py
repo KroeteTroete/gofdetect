@@ -49,7 +49,7 @@ def writeLang(langList: list[str], exportPath: FilePathType):
 
         for i in langList:
              
-             lengthByte = len(i).to_bytes(2, 'big')
+             lengthByte = len(bytes(i, 'utf-8')).to_bytes(2, 'big')
              
              f.write(lengthByte)
              f.write(bytes(i, 'utf-8'))
