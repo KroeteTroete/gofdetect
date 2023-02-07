@@ -36,3 +36,20 @@ def extractLang(langPath: FilePathType) -> list[str]:
         f.close()
     
     return langList
+
+
+def writeLang(langList: list[str], exportPath: FilePathType):
+    """
+    Takes a list of strings and writes a .lang file
+
+    :param list langList: the list of strings
+    :param FilePathType exportPath: Path of the exported file. Should end with ".lang"
+    """
+    with open(exportPath, 'wb') as f:
+
+        for i in langList:
+             
+             lengthByte = len(bytes(i, 'utf-8')).to_bytes(2, 'big')
+             
+             f.write(lengthByte)
+             f.write(bytes(i, 'utf-8'))
