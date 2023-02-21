@@ -1,9 +1,10 @@
 #bindetect.py detects strings inside a .bin file
 #bin file structure info can be found here https://github.com/Ravernstal/gof2-bin-info
+import time
 from os import PathLike
 from typing import List, Literal, Union, overload
 
-BinType = Literal['names', 'stations', 'systems']
+BinType = Literal['names', 'stations', 'systems', "common"]
 FilePathType = Union[str, PathLike[str]]
 
 @overload
@@ -93,7 +94,30 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
             except Exception as e:
                 print(e)
                 reachedEnd = True
-            
+    
+    if binType == 'agents':
+        # Length1 Length2 Name - 41 bytes till next Length1 byte
+
+        with open(binFile, 'rb') as f:
+            reachedEnd = False
+            try:
+                while reachedEnd == False:
+
+                    length = int.from_bytes(f.read(2), byteorder='big') #length
+
+                    if length == 0:
+                        reachedEnd == True
+                        break
+
+                    name = f.read(length).decode()
+                    names.append(name)
+
+                    f.read(41)#skip
+
+            except Exception as e:
+                print(e)
+                reachedEnd = True
+        
     if returnType == 'list':
         return names
     elif returnType == 'string':
