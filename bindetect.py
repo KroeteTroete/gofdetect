@@ -1,6 +1,5 @@
 #bindetect.py detects strings inside a .bin file
 #bin file structure info can be found here https://github.com/Ravernstal/gof2-bin-info
-import time
 from os import PathLike
 from typing import List, Literal, Union, overload
 
