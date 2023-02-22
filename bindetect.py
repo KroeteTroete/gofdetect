@@ -3,7 +3,7 @@
 from os import PathLike
 from typing import List, Literal, Union, overload
 
-BinType = Literal['names', 'stations', 'systems', 'agemts']
+BinType = Literal['names', 'stations', 'systems', 'agents']
 FilePathType = Union[str, PathLike[str]]
 
 @overload
