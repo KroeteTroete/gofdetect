@@ -34,6 +34,7 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
                 for i in range(0, amount ):
 
                     length = int.from_bytes(f.read(2), byteorder='big') #length
+                    
                     name = f.read(length).decode() #extract name
 
                     names.append(name)
@@ -51,12 +52,16 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
             reachedEnd = False
             try:
                 while reachedEnd == False:
-
+                    
                     length = int.from_bytes(f.read(2), byteorder='big') #length
+                    if length <= 0:
+                        reachedEnd = True
+                        break
                     name = f.read(length).decode() #extract name
                     names.append(name)
 
-                    f.read(16) #skip Station ID, System ID, Tech level and Planet Background    
+                    f.read(16) #skip Station ID, System ID, Tech level and Planet Background
+
             except Exception as e:
                 print(e)
                 reachedEnd = True
@@ -70,6 +75,9 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
                 while reachedEnd == False:
 
                     length = int.from_bytes(f.read(2), byteorder='big') #length
+                    if length <= 0:
+                        reachedEnd = True
+                        break
                     name = f.read(length).decode() # extract name
                     names.append(name)
 
