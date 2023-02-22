@@ -16,7 +16,7 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
     detects the strings inside a bin file and places them into an array
 
     :param str binFile: path to the .bin file
-    :param str binType: Type of bin file. Valid binTypes are: 'names', 'stations', 'systems'
+    :param str binType: Type of bin file. Valid binTypes are: 'names', 'stations', 'systems', 'agents'
     :param str returnType: Determines what type of object should be returned in the end. Valid returntypes are: 'list', 'string'
     """
     names: List[str] = []
