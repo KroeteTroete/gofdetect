@@ -25,16 +25,15 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
     if binType == 'names':
         with open(binFile, 'rb') as f:
             
-            #00 00 00 NUM SEP
+            #00 00 00 NUM 
             f.read(3)
-            amount = ord(f.read(1)) #extract amount of bytes
+            amount = ord(f.read(1)) #extract amount of names
             
 
             try:
                 for i in range(0, amount ):
 
-                    f.read(1)#skip seperator
-                    length = ord(f.read(1)) #read length
+                    length = int.from_bytes(f.read(2), byteorder='big') #length
                     name = f.read(length).decode() #extract name
 
                     names.append(name)
@@ -53,7 +52,7 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
             try:
                 while reachedEnd == False:
 
-                    f.read(1) #seperator
+                    length = int.from_bytes(f.read(2), byteorder='big') #length
                     length = ord(f.read(1)) #read length
                     name = f.read(length).decode() #extract name
                     names.append(name)
@@ -71,8 +70,7 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
             try:
                 while reachedEnd == False:
 
-                    f.read(1) #seperator
-                    length = ord(f.read(1)) #read length
+                    length = int.from_bytes(f.read(2), byteorder='big') #length
                     name = f.read(length).decode() # extract name
                     names.append(name)
 
