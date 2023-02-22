@@ -53,7 +53,6 @@ def detectStrings(binFile: FilePathType, binType: BinType, returnType: Literal['
                 while reachedEnd == False:
 
                     length = int.from_bytes(f.read(2), byteorder='big') #length
-                    length = ord(f.read(1)) #read length
                     name = f.read(length).decode() #extract name
                     names.append(name)
 
